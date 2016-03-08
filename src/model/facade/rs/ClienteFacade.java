@@ -33,7 +33,7 @@ public class ClienteFacade {
 
 	@GET
 	@Path("/{codigo}")
-	public Cliente getClientes(@PathParam("codigo") Integer codigo){
+	public Cliente getClientes(@PathParam("codigo") Integer codigo) {
 		try {
 			return getCliente(codigo);
 		} catch (ClienteNaoEncontradoException e) {
@@ -43,11 +43,11 @@ public class ClienteFacade {
 	}
 
 	private Cliente getCliente(Integer codigo) throws ClienteNaoEncontradoException {
-		for (Cliente cliente: clientes) {
+		for (Cliente cliente : clientes) {
 			if (cliente.getCodigo().equals(codigo)) {
 				return cliente;
 			}
-			
+
 		}
 		throw new ClienteNaoEncontradoException(codigo);
 	}
@@ -63,23 +63,26 @@ public class ClienteFacade {
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
-	
+
 	@PUT
-	public Cliente atualizarCliente(Cliente cliente){
+	public Cliente atualizarCliente(Cliente cliente) {
 		int pos = clientes.indexOf(cliente);
-		if(pos >=0){
-			clientes.set(pos,cliente);
+		if (pos >= 0) {
+			clientes.set(pos, cliente);
 			return cliente;
 		}
 		throw new WebApplicationException(404);
 	}
+
 	@DELETE
 	@Path("/{codigo}")
-	public Cliente deletarCliente(@PathParam("codigo")Integer codigo){
-		try{
+	public Cliente deletarCliente(@PathParam("codigo") Integer codigo) {
+		try {
 			Cliente cliente = getCliente(codigo);
-			}
-		
+			clientes.remove(clientes.indexOf(cliente));
+			return cliente;
+		} catch (ClienteNaoEncontradoException e) {
+			throw new WebApplicationException(404);
 		}
-
+	}
 }
