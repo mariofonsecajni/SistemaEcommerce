@@ -1,5 +1,6 @@
 package model.facade.rs;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,19 +18,23 @@ import model.domain.Cliente;
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class ClienteFacade {
-
-	@GET
-	public List<Cliente> getClientes() {
-		return Arrays.asList(new Cliente(1, "carlos", "carlos@gmail.com"),
-				new Cliente(2, "fulano", "fulano@gmail.com"));
+	private static List<Cliente> clientes = new ArrayList<Cliente>();
+	
+	// simula o dao, construtor de classe (executa uma vez só, o de objeto executa em todos objetos)
+	static{
+		
+		clientes.add(new Cliente(1, "carlos", "carlos@gmail.com"));
+		clientes.add(new Cliente(2, "fulano", "fulano@gmail.com"));
 	}
+
+	
 
 	@GET
 	@Path("/{codigo}")
 	public Cliente getClientes(@PathParam("codigo") Integer codigo) {
 
-		if (codigo == 1) {
-			return new Cliente(1, "carlos", "carlos@gmail.com");
+		if (clientes.get(codigo) != null) {
+			return clientes.get(codigo);
 		} else {
 			return new Cliente(3, "novo cliente", "novo@gmail.com");
 		}
@@ -37,10 +42,13 @@ public class ClienteFacade {
 	
 	@POST
 	public Cliente salvar(Cliente cliente){
+		clientes.add(cliente);		
+		return cliente;
 		
-		
-		return null;
-		
+	}
+	@GET
+	public List<Cliente> getClientes(){
+		return clientes;
 	}
 
 }
