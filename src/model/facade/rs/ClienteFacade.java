@@ -1,7 +1,6 @@
 package model.facade.rs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,44 +9,56 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import model.domain.Cliente;
+import util.ClienteNaoEncontradoException;
 
 @Path("/cliente")
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class ClienteFacade {
 	private static List<Cliente> clientes = new ArrayList<Cliente>();
-	
-	// simula o dao, construtor de classe (executa uma vez só, o de objeto executa em todos objetos)
-	static{
-		
+
+	// simula o dao, construtor de classe (executa uma vez só, o de objeto
+	// executa em todos objetos)
+	static {
+
 		clientes.add(new Cliente(1, "carlos", "carlos@gmail.com"));
 		clientes.add(new Cliente(2, "fulano", "fulano@gmail.com"));
 	}
 
-	
-
 	@GET
 	@Path("/{codigo}")
-	public Cliente getClientes(@PathParam("codigo") Integer codigo) {
-
-		if (clientes.get(codigo) != null) {
-			return clientes.get(codigo);
-		} else {
-			return new Cliente(3, "novo cliente", "novo@gmail.com");
+	public Cliente getClientes(@PathParam("codigo") Integer codigo){
+		try {
+			return getCliente(codigo);
+		} catch (ClienteNaoEncontradoException e) {
+			throw new WebApplicationException(404);
 		}
+
 	}
-	
+
+	private Cliente getCliente(Integer codigo) throws ClienteNaoEncontradoException {
+		for (Cliente cliente: clientes) {
+			if (cliente.getCodigo().equals(codigo)) {
+				return cliente;
+			}
+			
+		}
+		throw new ClienteNaoEncontradoException(codigo);
+	}
+
 	@POST
-	public Cliente salvar(Cliente cliente){
-		clientes.add(cliente);		
+	public Cliente salvar(Cliente cliente) {
+		clientes.add(cliente);
 		return cliente;
-		
+
 	}
+
 	@GET
-	public List<Cliente> getClientes(){
+	public List<Cliente> getClientes() {
 		return clientes;
 	}
 
