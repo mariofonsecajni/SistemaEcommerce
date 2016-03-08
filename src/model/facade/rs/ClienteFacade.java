@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -61,5 +63,23 @@ public class ClienteFacade {
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
+	
+	@PUT
+	public Cliente atualizarCliente(Cliente cliente){
+		int pos = clientes.indexOf(cliente);
+		if(pos >=0){
+			clientes.set(pos,cliente);
+			return cliente;
+		}
+		throw new WebApplicationException(404);
+	}
+	@DELETE
+	@Path("/{codigo}")
+	public Cliente deletarCliente(@PathParam("codigo")Integer codigo){
+		try{
+			Cliente cliente = getCliente(codigo);
+			}
+		
+		}
 
 }
