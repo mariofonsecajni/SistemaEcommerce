@@ -1,30 +1,128 @@
 package model.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
 @XmlRootElement
+@Entity
+@Table(name="TB_CLIENTE")
 public class Cliente implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@Id
+	@Column(name = "CD_CLIENTE")
 	private Integer codigo;
-	
+	@Column(name="NM_CLIENTE")
 	private String nome;
+	@Column(name="DS_CARGO")
+	private String cargo;
+	@Column(name="DS_ENDERECO")
+	private String endereco;
+	@Column(name="DS_CIDADE")
+	private String cidade;
+	@Column(name="DS_CEP")
+	private String cep;
+	@Column(name="DS_PAIS")
+	private String pais;
+	@Column(name="DS_TELEFONE")
+	private String telefone;
+	@Column(name="DS_FAX")
+	private String fax;
 	
-	private String email;
+	
+	private List<Pedido> pedidos;
+	
 
-	public Cliente(Integer codigo, String nome, String email) {
+	public Cliente(Integer codigo, String nome, String cargo, String endereco, String cidade, String cep, String pais,
+			String telefone, String fax) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
-		this.email = email;
+		this.cargo = cargo;
+		this.endereco = endereco;
+		this.cidade = cidade;
+		this.cep = cep;
+		this.pais = pais;
+		this.telefone = telefone;
+		this.fax = fax;
 	}
 
+	@Override
+	public String toString() {
+		return "Cliente [codigo=" + codigo + ", nome=" + nome + ", cargo=" + cargo + ", endereco=" + endereco
+				+ ", cidade=" + cidade + ", cep=" + cep + ", pais=" + pais + ", telefone=" + telefone + ", fax=" + fax
+				+ "]";
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
+	
 	public Cliente() {
 		super();
 	}
@@ -45,14 +143,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,7 +168,5 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

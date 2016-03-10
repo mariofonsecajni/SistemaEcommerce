@@ -27,8 +27,8 @@ public class ClienteFacade {
 	// executa em todos objetos)
 	static {
 
-		clientes.add(new Cliente(1, "carlos", "carlos@gmail.com"));
-		clientes.add(new Cliente(2, "fulano", "fulano@gmail.com"));
+		//clientes.add(new Cliente(1, "carlos", "carlos@gmail.com"));
+		//clientes.add(new Cliente(2, "fulano", "fulano@gmail.com"));
 	}
 
 	@GET
