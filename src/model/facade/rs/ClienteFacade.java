@@ -1,26 +1,40 @@
 package model.facade.rs;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import model.dao.ClienteDao;
 import model.domain.Cliente;
-import util.ClienteNaoEncontradoException;
 
 @Path("/cliente")
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class ClienteFacade {
+	
+	private ClienteDao clienteDao;
+	@GET
+	public List<Cliente> getClientes() {
+		return clienteDao.getClientes(new Cliente());
+	}
+	
+	@GET
+	@Path("/{codigo}")
+	public List<Cliente> getClientes(@PathParam("codigo") Integer codigo) {
+		
+		Cliente cliente = new Cliente();
+		cliente.setCodigo(codigo);
+		return clienteDao.getClientes(cliente);
+
+	}
+		
+	/* antes do daoIml
+	 *
 	private static List<Cliente> clientes = new ArrayList<Cliente>();
 
 	// simula o dao, construtor de classe (executa uma vez só, o de objeto
@@ -30,8 +44,8 @@ public class ClienteFacade {
 		//clientes.add(new Cliente(1, "carlos", "carlos@gmail.com"));
 		//clientes.add(new Cliente(2, "fulano", "fulano@gmail.com"));
 	}
-
-	@GET
+	  
+	 * @GET
 	@Path("/{codigo}")
 	public Cliente getClientes(@PathParam("codigo") Integer codigo) {
 		try {
@@ -51,8 +65,13 @@ public class ClienteFacade {
 		}
 		throw new ClienteNaoEncontradoException(codigo);
 	}
-
-	@POST
+*/
+	
+	
+	
+	
+	
+/*	@POST
 	public Cliente salvar(Cliente cliente) {
 		clientes.add(cliente);
 		return cliente;
@@ -84,5 +103,5 @@ public class ClienteFacade {
 		} catch (ClienteNaoEncontradoException e) {
 			throw new WebApplicationException(404);
 		}
-	}
+	}*/
 }

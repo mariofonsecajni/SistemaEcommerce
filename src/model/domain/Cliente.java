@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,7 +40,7 @@ public class Cliente implements Serializable {
 	@Column(name="DS_FAX")
 	private String fax;
 	
-	
+	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
 	
 

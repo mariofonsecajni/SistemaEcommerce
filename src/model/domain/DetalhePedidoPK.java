@@ -11,7 +11,7 @@ public class DetalhePedidoPK implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1630433340226261772L;
-
+	
 	@Column(name = "NR_PEDIDO")
 	private Integer numeroPedido;
 	@Column(name = "CD_PRODUTO")
